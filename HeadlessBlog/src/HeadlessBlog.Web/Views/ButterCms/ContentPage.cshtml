@@ -1,0 +1,80 @@
+﻿
+@model ButterCMS.Models.Page<HeadlessBlog.Web.Models.ContentPage>
+
+@section Metadata
+    {
+    <title>@Model.Fields.Title - @ViewBag.BlogTitle</title>
+}
+
+<!-- content
+   ================================================== -->
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+        @{
+            var postHeaderImage = string.Empty;
+
+            if (!string.IsNullOrEmpty(Model.Fields.Media))
+            {
+                postHeaderImage = "style=background-image:url(" + Model.Fields.Media + ")";
+            }
+        }
+
+        <div class="page-header page-header--single page-hero" @postHeaderImage>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            @Model.Fields.Title
+                        </a>
+                    </h1>
+                </article>
+            </div>
+
+        </div> <!-- end page-header -->
+
+
+        <div class="row blog-content">
+
+            <div class="row narrow section-intro has-bottom-sep">
+                <div class="col-full text-center">
+                    @if (!string.IsNullOrEmpty(Model.Fields.LeadContent))
+                    {
+                        <p class="lead">@Html.Raw(Model.Fields.LeadContent)</p>
+                    }
+                </div>
+            </div>
+
+            <div class="col-full blog-content__main">
+                @if (!string.IsNullOrEmpty(Model.Fields.BodyContent))
+                {
+                    <p>@Html.Raw(Model.Fields.BodyContent)</p>
+                }
+
+                <div class="row block-1-2 block-tab-full">
+                    <div class="bgrid">
+                        <p>@Html.Raw(Model.Fields.TopLeftContent)</p>
+                    </div>
+
+                    <div class="bgrid">
+                        <p>@Html.Raw(Model.Fields.TopRightContent)</p>
+                    </div>
+
+                    <div class="bgrid">
+                        <p>@Html.Raw(Model.Fields.BottomLeftContent)</p>
+                    </div>
+
+                    <div class="bgrid">
+                        <p>@Html.Raw(Model.Fields.BottomRightContent)</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div><!-- end blog-content__main -->
+
+    </article>
+

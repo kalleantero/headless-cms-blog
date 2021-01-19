@@ -1,0 +1,58 @@
+
+@{
+    string twitterUrl = ViewData.Eval("TwitterUrl") as string;
+    string linkedInUrl = ViewData.Eval("LinkedInUrl") as string;
+    string githubUrl = ViewData.Eval("GithubUrl") as string;
+    string footerCopyright = ViewData.Eval("FooterCopyright") as string;
+
+}
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="/images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="@twitterUrl">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@linkedInUrl">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@githubUrl">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>@footerCopyright @DateTime.Now.Year</span>
+                <span>@Html.Raw(ViewBag.StringLocalizer["FooterDesignCredits"])</span>
+                <span>@Html.Raw(ViewBag.StringLocalizer["FooterCmsCredits"])</span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->

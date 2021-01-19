@@ -1,0 +1,13 @@
+
+@model IEnumerable<ButterCMS.Models.Page<HeadlessBlog.Web.Models.ContentPage>>
+
+@if (Model.Any())
+{
+    <h4>@ViewBag.StringLocalizer["SiteLinksTitle"]</h4>
+    <ul>
+        @foreach (var page in Model)
+        {
+            <li><a id="site-links-@Uri.EscapeDataString(page.Slug)" href="/@Uri.EscapeDataString(page.Slug)">@Html.Raw(page.Fields.NavigationTitle)</a></li>
+        }
+    </ul>
+}

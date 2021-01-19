@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/HeadlessBlog/src/HeadlessBlog.Web/bin/Debug/netcoreapp3.1
+/HeadlessBlog/.vs/HeadlessBlog
+/HeadlessBlog/src/HeadlessBlog.Web/obj/Debug/netcoreapp3.1
+/HeadlessBlog/src/HeadlessBlog.Web/obj
+/HeadlessBlog/src/HeadlessBlog.Web/HeadlessBlog.Web.csproj.user

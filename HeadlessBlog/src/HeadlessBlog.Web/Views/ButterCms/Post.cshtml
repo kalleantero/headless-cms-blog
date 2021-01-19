@@ -1,0 +1,103 @@
+﻿@using HeadlessBlog.Web.Constants;
+@model ButterCMS.Models.PostResponse;
+
+@section Metadata
+    {
+    <title>@Model.Data.SeoTitle - @ViewBag.BlogTitle</title>
+    <meta name="description" content="@Model.Data.MetaDescription">
+    <meta name="author" content="@Model.Data.Author.FirstName @Model.Data.Author.LastName">
+}
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        @{
+            var postHeaderImage = string.Empty;
+
+            if (!string.IsNullOrEmpty(Model.Data.FeaturedImage))
+            {
+                postHeaderImage = "style=background-image:url("+ Model.Data.FeaturedImage+")";
+            }
+         }
+        
+        <div class="page-header page-header--single page-hero" @postHeaderImage>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                            @foreach (var category in Model.Data.Categories)
+                            {
+                                <a id="post-category-@Uri.EscapeDataString(category.Slug)" href="@string.Concat(CommonConstants.Routes.Category, Uri.EscapeDataString(category.Slug))">@category.Name</a>
+                            }
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            @Model.Data.Title
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+                            @if (Model.Data.Published.HasValue)
+                            {
+                                @Model.Data.Published.Value.ToString("dd.MM.yyyy HH:mm")
+                            }
+                        </li>
+                            <li class="author">
+                                By
+                                <span>@Model.Data.Author.FirstName @Model.Data.Author.LastName</span>
+                            </li>
+                        </ul>
+
+                </article>
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p>@Html.Raw(Model.Data.Body)</p>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                        @if (Model.Meta.PreviousPost != null)
+                        {
+                            <div class="blog-content__prev">
+                                <a id="post-previous-@Uri.EscapeDataString(Model.Meta.PreviousPost.Slug)" href="@string.Concat(CommonConstants.Routes.Blog, Uri.EscapeDataString(Model.Meta.PreviousPost.Slug))" rel="prev">
+                                    <span>Previous Post</span>
+                                    @Model.Meta.PreviousPost.Title
+                                </a>
+                            </div>
+                        }
+                        @if (Model.Meta.NextPost != null)
+                        {
+                            <div class="blog-content__next">
+                                <a id="post-next-@Uri.EscapeDataString(Model.Meta.NextPost.Slug)" href="@string.Concat(CommonConstants.Routes.Blog, Uri.EscapeDataString(Model.Meta.NextPost.Slug))" rel="next">
+                                    <span>Next Post</span>
+                                    @Model.Meta.NextPost.Title
+                                </a>
+                            </div>
+                        }
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="/" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+

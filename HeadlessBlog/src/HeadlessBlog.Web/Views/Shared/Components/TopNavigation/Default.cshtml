@@ -1,0 +1,31 @@
+
+@model IEnumerable<ButterCMS.Models.Page<HeadlessBlog.Web.Models.ContentPage>>
+
+@if (Model.Any())
+{
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+            @{
+                var currentUrl = Context.Request.Path.ToString();
+                currentUrl = currentUrl.Replace("/", string.Empty);
+                var rootItemClass = string.IsNullOrEmpty(currentUrl) ? "current" : string.Empty;
+            }
+
+            <li class="@rootItemClass"><a id="top-navigation-link-root" href="/" title="">Home</a></li>
+
+            @foreach (var page in Model)
+            {
+                var dynamicItemClass = (currentUrl == page.Slug ? "current" : "smoothscroll");
+
+                <li id="top-navigation-link-@Uri.EscapeDataString(page.Slug)" class="@dynamicItemClass"><a href="/@Uri.EscapeDataString(page.Slug)" title="">@Html.Raw(page.Fields.NavigationTitle)</a></li>
+            }
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+}
+
+

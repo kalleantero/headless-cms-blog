@@ -1,0 +1,54 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
+<html>
+<head>
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    @RenderSection("Metadata", required: false)
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/vendor.css">
+    <link rel="stylesheet" href="/css/main.css">
+      
+    <script src="/js/modernizr.js"></script>
+    <script src="/js/pace.min.js"></script>
+
+    @Html.Raw(JavaScriptSnippet.FullScript)
+</head>
+<body id="top">
+  
+    <!-- header
+    ================================================== -->
+
+    <cache expires-after="@TimeSpan.FromMinutes(60)">
+        @await Component.InvokeAsync("Header")
+    </cache>
+
+    @RenderBody()
+
+    <cache expires-after="@TimeSpan.FromMinutes(60)">
+        @await Component.InvokeAsync("Footer")
+    </cache>
+
+
+        <div id="preloader">
+            <div id="loader"></div>
+        </div>
+
+        <!-- Java Script
+         ================================================== -->
+        <script src="/js/jquery-3.2.1.min.js"></script>
+        <script src="/js/plugins.js"></script>
+        <script src="/js/main.min.js"></script>
+        @RenderSection("Scripts", required: false)
+
+</body>
+</html>

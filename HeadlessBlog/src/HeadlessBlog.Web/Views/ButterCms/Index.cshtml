@@ -1,0 +1,105 @@
+﻿@using HeadlessBlog.Web.Constants;
+@model List<ButterCMS.Models.Post>;
+
+@section Metadata
+    {
+    <title>@ViewBag.BlogTitle</title>
+    <meta name="description" content="@ViewBag.AboutTheSiteDescription">
+}
+
+<!-- page header
+    ================================================== -->
+
+@{
+    var latestPost = Model.Take(1).FirstOrDefault();
+    var postHeaderImage = string.Empty;
+
+    if (latestPost != null)
+    {
+        if (!string.IsNullOrEmpty(latestPost.FeaturedImage))
+        {
+            postHeaderImage = "style=background-image:url(" + latestPost.FeaturedImage + ")";
+        }
+    }
+
+    var posts = Model.Where(x => x.Slug != latestPost.Slug).ToList();
+
+}
+
+<section class="page-header page-hero" @postHeaderImage>
+       
+    <div class="row page-header__content">
+        <article class="col-full">
+
+            <div class="page-header__info">
+                <div class="page-header__cat">
+                    @foreach (var category in latestPost.Categories)
+                    {
+                        <a id="post-category-@Uri.EscapeDataString(category.Slug)" href="@string.Concat(CommonConstants.Routes.Category, Uri.EscapeDataString(category.Slug))">@category.Name</a>
+                    }
+                </div>
+                <div class="page-header__date">
+                    @if (latestPost.Published.HasValue)
+                    {
+                        @latestPost.Published.Value.ToString("dd.MM.yyyy HH:mm")
+                    }
+                </div>
+            </div>
+
+            <h1 class="page-header__title">
+                <a href="@string.Concat(CommonConstants.Routes.Blog, Uri.EscapeDataString(latestPost.Slug))" title="">
+                    @latestPost.Title
+                </a>
+            </h1>
+            <p>@latestPost.Summary</p>
+            <p>
+                <a href="@string.Concat(CommonConstants.Routes.Blog, Uri.EscapeDataString(latestPost.Slug))" class="btn btn--stroke page-header__btn">Read More</a>
+            </p>
+        </article>
+    </div>
+
+</section> <!-- end page-header -->
+<!-- blog
+================================================== -->
+<section class="blog-content-wrap">
+
+    <div class="row blog-content">
+        <div class="col-full">
+
+            <div class="blog-list block-1-2 block-tab-full">
+
+                @foreach (var post in posts)
+                {
+                    <article class="col-block">
+
+                        <div class="blog-date">
+                            <a href="@string.Concat(CommonConstants.Routes.Blog, Uri.EscapeDataString(post.Slug))">
+                                @if (post.Published.HasValue)
+                                {
+                                    @post.Published.Value.ToString("dd.MM.yyyy HH:mm")
+                                }
+                            </a>
+                        </div>
+
+                        <h2 class="h01"><a href="@string.Concat(CommonConstants.Routes.Blog, Uri.EscapeDataString(post.Slug))">@post.Title</a></h2>
+                        <p>
+                            @post.Summary
+                        </p>
+
+                        <div class="blog-cat">
+                            @foreach (var category in post.Categories)
+                            {
+                                <a id="post-category-@Uri.EscapeDataString(category.Slug)" href="@string.Concat(CommonConstants.Routes.Category, Uri.EscapeDataString(category.Slug))">@category.Name</a>
+                            }
+                        </div>
+
+                    </article> <!-- end article -->
+                }
+
+
+            </div> <!-- end blog-list -->
+
+        </div> <!-- end col-full -->
+    </div> <!-- end blog-content -->
+
+</section> <!-- end blog-content-wrap -->
